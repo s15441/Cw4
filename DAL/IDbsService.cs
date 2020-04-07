@@ -8,6 +8,7 @@ namespace Cw3.DAL
 {
     public interface IDbsService
     {
+        public bool CheckIndex(string index);
         public IEnumerable<Student> GetStudents();
     }
 }

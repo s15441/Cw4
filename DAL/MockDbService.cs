@@ -1,6 +1,7 @@
 ﻿using Cw3.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,6 +20,23 @@ namespace Cw3.DAL
                 new Student{IdStudent=3, FirstName="Andrzej", LastName="Andrzejewicz" }
             };
 
+        }
+
+        public bool CheckIndex(string index)
+        {
+
+            using (var client = new SqlConnection("Data Source=db-mssql;Initial Catalog=s15441;Integrated Security=True"))
+            using (var com = new SqlCommand())
+            {
+                com.Connection = client;
+                com.CommandText = $"Select * from student where idstudent = @id";
+                com.Parameters.AddWithValue("index", index);
+                client.Open();
+                var dr = com.ExecuteReader();
+
+                return dr.HasRows;
+
+            }
         }
         public IEnumerable<Student> GetStudents()
         {
